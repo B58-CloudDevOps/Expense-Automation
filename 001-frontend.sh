@@ -44,4 +44,4 @@ echo -e "\e[35m Starting frontend \e[0m"
 systemctl restart nginx  &>> /tmp/frontend.log
 stat $?
 
-echo "** Frontend Installation Is Completed **"
+echo -e "\n\t** Frontend Installation Is Completed **"
