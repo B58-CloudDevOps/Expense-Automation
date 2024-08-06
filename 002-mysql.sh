@@ -19,7 +19,7 @@ stat() {
 
 if [ "$ID" -ne 0 ]; then 
     echo -e "\e[31m Script is expected to be executed as a root user or with sudo scriptName.sh \e[0m"
-    echo -e "\t  sudo bash $0"
+    echo -e "\t sudo bash $0"
     exit 1
 fi 
 
