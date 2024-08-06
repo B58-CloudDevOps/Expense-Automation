@@ -2,6 +2,10 @@
 
 ID=$(id -u)
 
+COLOR() {
+    echo -e "\e[32m $* \e[0m"
+} 
+
 stat() {
     if [ $1 -eq  0 ] ; then 
         echo -e "\e[32m - Success \e[0m" 
@@ -16,31 +20,31 @@ if [ "$ID" -ne 0 ]; then
     exit 1
 fi 
 
-echo -e "\e[35m Installing Nginx \e[0m"
+COLOR Installing Ngnix
 dnf install nginx -y    &>> /tmp/frontend.log
 stat $?
 
-echo -e "\e[35m  Copying Proxy file \e[0m"
+COLOR Copying Proxy file
 cp proxy.conf /etc/nginx/default.d/expense.conf &>> /tmp/frontend.log
 stat $?
 
-echo -e "\e[35m  Enabling Nginx \e[0m"
+COLOR Enabling Nginx
 systemctl enable nginx &>> /tmp/frontend.log
 stat $?
 
-echo -e "\e[35m  Performing a Cleanup \e[0m"
+COLOR Performing a Cleanup
 stat $?
 
-echo -e "\e[35m  Downloading Frontend \e[0m"
+COLOR Downloading Frontend
 curl -o /tmp/frontend.zip https://expense-web-app.s3.amazonaws.com/frontend.zip &>> /tmp/frontend.log
 stat $?
 
 cd /usr/share/nginx/html 
-echo -e "\e[35m  Extracting frontend \e[0m"
+COLOR Extracting frontend 
 unzip -o /tmp/frontend.zip &>> /tmp/frontend.log
 stat $?
 
-echo -e "\e[35m Starting frontend \e[0m"
+COLOR Starting frontend
 systemctl restart nginx  &>> /tmp/frontend.log
 stat $?
 
