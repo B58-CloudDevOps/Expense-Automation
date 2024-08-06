@@ -1,6 +1,7 @@
 #!/bin/bash 
 
 COMPONENT="mysql"
+ROOTPASS=$1
 ID=$(id -u)
 LOG="/tmp/mysql.log"
 
@@ -37,7 +38,7 @@ stat $?
 
 
 COLOR Configuring $COMPONENT Root Password
-mysql_secure_installation --set-root-pass ExpenseApp@1
+mysql_secure_installation --set-root-pass $ROOTPASS
 stat $?
 
 # echo "show databases;" | mysql -uroot -pExpenseApp@1 
