@@ -22,7 +22,7 @@ if [ "$ID" -ne 0 ]; then
 fi 
 
 COLOR Installing Ngnix
-dnf install nginx -y    &>> 
+dnf install nginx -y  &>> $LOG
 stat $?
 
 COLOR Copying Proxy file
