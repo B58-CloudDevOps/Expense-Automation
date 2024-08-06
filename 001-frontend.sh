@@ -3,7 +3,7 @@
 ID=$(id -u)
 
 COLOR() {
-    echo -e "\e[33m $* \e[0m"
+    echo -e "\e[35m $* \e[0m"
 } 
 
 stat() {
