@@ -13,7 +13,7 @@ stat() {
         echo -e "\e[32m - Success \e[0m" 
     else 
         echo -e "\e[31m - Failure \e[0m" 
-        exit 1
+        exit 2
     fi 
 }
 
@@ -35,11 +35,16 @@ COLOR Starting $COMPONENT
 systemctl start  mysqld        &>> $LOG      
 stat $?
 
-echo "show databases;" | mysql -uroot -pExpenseApp@1 
-if [ $? -ne 0 ] ; then 
-    COLOR Configuring $COMPONENT Root Password
-    mysql_secure_installation --set-root-pass ExpenseApp@1
-    stat $?
-fi 
+
+COLOR Configuring $COMPONENT Root Password
+mysql_secure_installation --set-root-pass ExpenseApp@1
+stat $?
+
+# echo "show databases;" | mysql -uroot -pExpenseApp@1 
+# if [ $? -ne 0 ] ; then 
+#     COLOR Configuring $COMPONENT Root Password
+#     mysql_secure_installation --set-root-pass ExpenseApp@1
+#     stat $?
+# fi 
 
 echo -e "\n\t ** Mysql Installation Completed **"
