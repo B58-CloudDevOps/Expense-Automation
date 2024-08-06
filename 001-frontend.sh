@@ -1,6 +1,7 @@
 #!/bin/bash 
 
 ID=$(id -u)
+LOG="/tmp/frontend.log"
 
 COLOR() {
     echo -e "\e[35m $* \e[0m"
@@ -21,31 +22,31 @@ if [ "$ID" -ne 0 ]; then
 fi 
 
 COLOR Installing Ngnix
-dnf install nginx -y    &>> /tmp/frontend.log
+dnf install nginx -y    &>> 
 stat $?
 
 COLOR Copying Proxy file
-cp proxy.conf /etc/nginx/default.d/expense.conf &>> /tmp/frontend.log
+cp proxy.conf /etc/nginx/default.d/expense.conf &>> $LOG
 stat $?
 
 COLOR Enabling Nginx
-systemctl enable nginx &>> /tmp/frontend.log
+systemctl enable nginx &>> $LOG
 stat $?
 
 COLOR Performing a Cleanup
 stat $?
 
 COLOR Downloading Frontend
-curl -o /tmp/frontend.zip https://expense-web-app.s3.amazonaws.com/frontend.zip &>> /tmp/frontend.log
+curl -o /tmp/frontend.zip https://expense-web-app.s3.amazonaws.com/frontend.zip &>> $LOG
 stat $?
 
 cd /usr/share/nginx/html 
 COLOR Extracting frontend 
-unzip -o /tmp/frontend.zip &>> /tmp/frontend.log
+unzip -o /tmp/frontend.zip &>> $LOG
 stat $?
 
 COLOR Starting frontend
-systemctl restart nginx  &>> /tmp/frontend.log
+systemctl restart nginx  &>> $LOG
 stat $?
 
 echo -e "\n\t** Frontend Installation Is Completed **"
