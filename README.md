@@ -19,4 +19,9 @@ For ex: shipping.flikrt.com , payment.flikrt.com   ( Public Domains : These reco
 ### How it works,  when if an org wants to move them domain name system to cloud from on-prem 
 
     1) They create the domain with the same name on AWS Route53 
-    2) They will change the nameServer details on cloud. ( Domain migration )
+    2) They will change the nameServer details on cloud ( Domain migration )
+
+### Internal Zones 
+
+    1) Internal Domains are unique only with in the account 
+    2) They are resolved only on the networks you mentioned.
