@@ -2,5 +2,63 @@
 
 COMPONENT="backend"
 LOG="/tmp/backend.log"
+APPUSER="expense"
 
 source common.sh                # This will pull all the functions and the available variables from this file and make it available locally to this script
+
+COLOR Disabling default nodejs16 version
+dnf module disable nodejs -y &>> $LOG
+stat $? 
+
+COLOR Enabling Nodejs20
+dnf module enable nodejs:20 -y &>> $LOG
+stat $? 
+
+COLOR Installing Nodejs20 
+dnf install nodejs -y &>> $LOG
+stat $? 
+
+COLOR Creating $APPUSER Service Account 
+useradd $APPUSER
+stat $? 
+
+COLOR Cleanup of old content
+rm -rf /app &>> $LOG
+
+COLOR Downloading $COMPONENT
+mkdir /app 
+curl -o /tmp/backend.zip https://expense-web-app.s3.amazonaws.com/backend.zip  
+stat $? 
+
+COLOR configuring backend service 
+cp backend.service /etc/systemd/system/backend.service 
+stat $?
+
+COLOR Extracting $COMPONENT 
+cd /app 
+unzip -o /tmp/backend.zip  &>> $LOG
+stat $? 
+
+COLOR Generating Artifacts
+npm install &>> $LOG
+stat $? 
+
+COLOR Defining Permissions To $APPUSER
+chmod -R 775 /app
+chown -R expense:expense /app
+stat $? 
+
+COLOR Installing mysql client
+dnf install mysql-server -y &>> $LOG
+
+COLOR Injecting Scheme To MySQL DB
+mysql -h 172.31.46.213 -uroot -pExpenseApp@1 < /app/schema/backend.sql
+stat $? 
+
+COLOR Starting $COMPONENT  
+systemctl daemon-reload     &>> $LOG
+systemctl enable backend    &>> $LOG
+systemctl start backend     &>> $LOG
+
+
+echo -e "\n\t ** Mysql Installation Completed **"
