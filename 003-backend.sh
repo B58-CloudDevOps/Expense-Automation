@@ -63,7 +63,7 @@ stat $?
 COLOR Starting $COMPONENT  
 systemctl daemon-reload     &>> $LOG
 systemctl enable backend    &>> $LOG
-systemctl start backend     &>> $LOG
+systemctl restart backend     &>> $LOG
 
 
 echo -e "\n\t ** Mysql Installation Completed **"
