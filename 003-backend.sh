@@ -18,9 +18,12 @@ COLOR Installing Nodejs20
 dnf install nodejs -y &>> $LOG
 stat $? 
 
-COLOR Creating $APPUSER Service Account 
-useradd $APPUSER
-stat $? 
+id $APPUSER  &>> $LOG                          # This makes sure account creation will only happen if the account doesn't exist.
+if [ $? -ne 0 ]; then 
+    COLOR Creating $APPUSER Service Account 
+    useradd $APPUSER
+    stat $? 
+fi 
 
 COLOR Cleanup of old content
 rm -rf /app &>> $LOG
