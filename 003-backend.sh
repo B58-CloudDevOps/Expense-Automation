@@ -3,6 +3,7 @@
 COMPONENT="backend"
 LOG="/tmp/backend.log"
 APPUSER="expense"
+ROOTPASS=$1
 
 source common.sh                # This will pull all the functions and the available variables from this file and make it available locally to this script
 
@@ -30,11 +31,11 @@ rm -rf /app &>> $LOG
 
 COLOR Downloading $COMPONENT
 mkdir /app 
-curl -o /tmp/backend.zip https://expense-web-app.s3.amazonaws.com/backend.zip    &>> $LOG
+curl -o /tmp/$COMPONENT.zip https://expense-web-app.s3.amazonaws.com/$COMPONENT.zip    &>> $LOG
 stat $? 
 
 COLOR configuring backend service 
-cp backend.service /etc/systemd/system/backend.service 
+cp backend.service /etc/systemd/system/$COMPONENT.service 
 stat $?
 
 COLOR Extracting $COMPONENT 
@@ -48,14 +49,14 @@ stat $?
 
 COLOR Defining Permissions To $APPUSER
 chmod -R 775 /app
-chown -R expense:expense /app
+chown -R $APPUSER:$APPUSER /app
 stat $? 
 
 COLOR Installing mysql client
 dnf install mysql-server -y &>> $LOG
 
 COLOR Injecting Scheme To MySQL DB
-mysql -h 172.31.46.213 -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h 172.31.46.213 -uroot -p$ROOTPASS < /app/schema/backend.sql
 stat $? 
 
 COLOR Starting $COMPONENT  
