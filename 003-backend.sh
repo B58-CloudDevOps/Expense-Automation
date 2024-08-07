@@ -66,5 +66,4 @@ systemctl daemon-reload     &>> $LOG
 systemctl enable backend    &>> $LOG
 systemctl restart backend     &>> $LOG
 
-
 echo -e "\n\t ** $COMPONENT Installation Completed **"

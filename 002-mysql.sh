@@ -22,4 +22,4 @@ COLOR Configuring $COMPONENT Root Password
 mysql_secure_installation --set-root-pass $ROOTPASS  &>> $LOG      
 stat $?
 
-echo -e "\n\t ** Mysql Installation Completed **"
+echo -e "\n\t ** $COMPOMENT Installation Completed **"
