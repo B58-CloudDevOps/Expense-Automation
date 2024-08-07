@@ -28,6 +28,7 @@ fi
 
 COLOR Cleanup of old content
 rm -rf /app &>> $LOG
+stat $?
 
 COLOR Downloading $COMPONENT
 mkdir /app 
