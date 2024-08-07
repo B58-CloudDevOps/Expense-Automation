@@ -27,7 +27,7 @@ rm -rf /app &>> $LOG
 
 COLOR Downloading $COMPONENT
 mkdir /app 
-curl -o /tmp/backend.zip https://expense-web-app.s3.amazonaws.com/backend.zip  
+curl -o /tmp/backend.zip https://expense-web-app.s3.amazonaws.com/backend.zip    &>> $LOG
 stat $? 
 
 COLOR configuring backend service 
